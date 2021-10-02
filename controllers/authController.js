@@ -9,10 +9,8 @@ export const jwtAuthorization = async (req, res, next) =>  {
   try {
     const { email, password } = jwt.verify(access_token, 'my-super-secret-key');
     const user = await User.findOne({ email, password });
-    if (!user) return res
-      .cookie('access_token', access_token, { expires: new Date(Date.now() - 1) } )
-      .redirect('signin');
-  } catch (error) { return res.cookie('access_token', access_token, { expires: new Date(Date.now() - 1) } ).redirect('signin') };
+    if (!user) throw new Error();
+  } catch (error) { return res.cookie('access_token', access_token, { expires: new Date(Date.now() - 1) } ).redirect('signin') }
 
   next();
 };
@@ -26,7 +24,7 @@ export const jwtAuthentication = async (req, res, next) => {
   }
 
   const token = jwt.sign({ email, password }, 'my-super-secret-key');
-  res.cookie('access_token', token, { httpOnly: true })
+  res.cookie('access_token', token, { httpOnly: true });
   next();
 };
 
@@ -35,7 +33,7 @@ export const signUp = async (req, res) => {
 
   if (confirm_password !== password) return res
     .render('signup', { error: 'Passwords dont match!' });
-  
+
   await User.create({ email, password });
   res.redirect('/signin');
 };
