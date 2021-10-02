@@ -1,7 +1,7 @@
 import Express from 'express';
 import cookieParser from 'cookie-parser';
-import * as AuthController from './controllers/authController.js';
-import * as ViewController from './controllers/viewsController.js';
+import * as authController from './controllers/authController.js';
+import * as viewController from './controllers/viewsController.js';
 
 const app = Express();
 
@@ -14,14 +14,14 @@ app.use(Express.static('./public'));
 app.use(cookieParser());
 
 app.route('/protected')
-  .get(AuthController.jwtAuthorization, ViewController.getProtectedView);
+  .get(authController.jwtAuthorization, ViewController.getProtectedView);
 
 app.route('/signin')
-  .get(ViewController.getSignInView)
-  .post(AuthController.jwtAuthentication, (req, res) => res.redirect('protected'));
+  .get(viewController.getSignInView)
+  .post(authController.jwtAuthentication, (req, res) => res.redirect('protected'));
 
 app.route('/signup')
-  .get(ViewController.getSignUpView)
-  .post(AuthController.signUp);
+  .get(viewController.getSignUpView)
+  .post(authController.signUp);
 
 export default app;
