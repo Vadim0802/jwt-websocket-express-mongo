@@ -10,7 +10,11 @@ export const jwtAuthorization = async (req, res, next) =>  {
     const { email, password } = jwt.verify(access_token, 'my-super-secret-key');
     const user = await User.findOne({ email, password });
     if (!user) throw new Error();
+<<<<<<< HEAD
   } catch (error) { return res.cookie('access_token', access_token, { expires: new Date(Date.now() - 1) } ).redirect('signin') }
+=======
+  } catch (error) { return res.cookie('access_token', access_token, { expires: new Date(Date.now() - 1) } ).redirect('signin') };
+>>>>>>> eaf5008e0b5546f41e45984e71c8b5950d20f578
 
   next();
 };
