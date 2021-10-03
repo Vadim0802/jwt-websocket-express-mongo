@@ -14,7 +14,7 @@ app.use(Express.static('./public'));
 app.use(cookieParser());
 
 app.route('/protected')
-  .get(authController.jwtAuthorization, ViewController.getProtectedView);
+  .get(authController.jwtAuthorization, viewController.getProtectedView);
 
 app.route('/signin')
   .get(viewController.getSignInView)
