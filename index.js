@@ -12,7 +12,7 @@ app.use(Express.json());
 app.use(Express.urlencoded({ extended: true }));
 app.use(Express.static('./public'));
 app.use(cookieParser());
-//Test TEst
+
 app.route('/protected')
   .get(authController.jwtAuthorization, viewController.getProtectedView);
 
