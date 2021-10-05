@@ -18,7 +18,7 @@ app.route('/protected')
 
 app.route('/signin')
   .get(viewController.getSignInView)
-  .post(authController.jwtAuthentication, (req, res) => res.redirect('protected'));
+  .post(authController.jwtAuthentication, (_req, res) => res.redirect('protected'));
 
 app.route('/signup')
   .get(viewController.getSignUpView)

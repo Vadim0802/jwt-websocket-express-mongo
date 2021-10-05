@@ -1,5 +1,5 @@
-export const getSignInView = (req, res) => res.render('signin');
+export const getSignInView = (_req, res) => res.render('signin');
 
-export const getProtectedView = (req, res) => res.render('protected');
+export const getProtectedView = (_req, res) => res.render('protected');
 
-export const getSignUpView = (req, res) => res.render('signup');
+export const getSignUpView = (_req, res) => res.render('signup');
