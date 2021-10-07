@@ -2,16 +2,21 @@ const socket = io();
 const body = document.querySelector('body');
 const clientCircle = document.createElement('div');
 
-const createDivEl = (id, className) => {
+const createDivEl = (id, className, coords) => {
   const clientFigure = document.createElement('div');
   clientFigure.className = className;
   clientFigure.id = id;
+  clientFigure.style.left = coords.x;
+  clientFigure.style.top = coords.y;
   return clientFigure;
 };
 
-socket.on('init-client', (id) => {
+socket.on('init-client', ({ _id: id, coords }) => {
+  console.log('init-client', id)
   clientCircle.className = 'square';
   clientCircle.id = id;
+  clientCircle.style.left = coords.x;
+  clientCircle.style.top = coords.y;
   body.append(clientCircle);
   document.addEventListener('mousemove', e => {
     clientCircle.style.left = e.pageX + "px";
@@ -21,15 +26,15 @@ socket.on('init-client', (id) => {
 });
 
 socket.on('init-clients', (clients) => {
-  clients.forEach((id) => {
-    const clientFigure = createDivEl(id, 'square');
+  clients.forEach(({ _id: id, coords }) => {
+    const clientFigure = createDivEl(id, 'square', coords);
     body.append(clientFigure);
   });
 });
 
-socket.on('connected-client', (id) => {
+socket.on('connected-client', ({ _id: id, coords }) => {
   if (id !== clientCircle.id) {
-    const clientFigure = createDivEl(id, 'square');
+    const clientFigure = createDivEl(id, 'square', coords);
     body.append(clientFigure);
   }
 });
